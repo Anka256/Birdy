@@ -1,0 +1,7 @@
+[project]
+name = "birdy"
+version = "0.1.0"
+description = "An AI-powered bird identification system that recognizes bird species from user-uploaded photos, then enriches the result with human-taken images, species information, and bird sounds using trusted open biodiversity sources."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
