@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import re
 from src.state import AppState
+from src.tools.vision_client import get_bird_prediction
 
 load_dotenv()
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
@@ -26,4 +27,18 @@ def identify_bird_with_text_node(state: AppState):
     query = state["user_query"] + " scientific name"
     response = tavily_client.search(query=query)
     state["scientific_name"] = extract_scientific_name(response) or "Scientific name not found"
-    return State
+    return state
+
+def identify_bird_with_photo_node(state: AppState):
+    predicted_label = get_bird_prediction(state["media_path"])
+
+    tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
+    query = f"{predicted_label} scientific name"
+    
+    response = tavily_client.search(query=query)
+    scientific_name = extract_scientific_name(response)
+    
+    state["common_name"] = predicted_label
+    state["scientific_name"] = scientific_name
+    
+    return state
