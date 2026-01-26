@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 import os
 import re
 from src.state import AppState
-from src.tools.vision_client import get_bird_prediction
+from src.tools.vision_model import get_bird_prediction
+from src.tools.audio_client import analyze_audio
 
 load_dotenv()
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
@@ -40,5 +41,14 @@ def identify_bird_with_photo_node(state: AppState):
     
     state["common_name"] = predicted_label
     state["scientific_name"] = scientific_name
+    
+    return state
+
+def identify_bird_with_sound_node(state: AppState):
+    
+    prediction = analyze_audio(state['media_path'])
+
+    state["common_name"] = prediction['common_name']
+    state["scientific_name"] = prediction['scientific_name']
     
     return state
