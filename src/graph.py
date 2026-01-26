@@ -5,7 +5,7 @@ graph = StateGraph(AppState)
 
 graph.add_node("Decide Any Media", decide_any_media_node)
 
-graph.add_node("Identify Bird with Query", identify_bird_with_query_node)
+graph.add_node("Identify Bird with Text", identify_bird_with_text_node)
 graph.add_node("Identify Bird with Photo", identify_bird_with_photo_node)
 graph.add_node("Identify Bird with Sound", identify_bird_with_sound_node)
 
@@ -21,12 +21,12 @@ graph.add_conditional_edges(
     {
         "photo": "Identify Bird with Photo",
         "sound": "Identify Bird with Sound",
-        "query": "Identify Bird with Query",
+        "text": "Identify Bird with Text",
     },
 )
-graph.add_edge("Identify Bird with Query", "Find Bird Info")
-graph.add_edge("Identify Bird with Query", "Find Bird Photos")
-graph.add_edge("Identify Bird with Query", "Find Bird Sounds")
+graph.add_edge("Identify Bird with Text", "Find Bird Info")
+graph.add_edge("Identify Bird with Text", "Find Bird Photos")
+graph.add_edge("Identify Bird with Text", "Find Bird Sounds")
 
 graph.add_edge("Identify Bird with Photo", "Find Bird Info")
 graph.add_edge("Identify Bird with Photo", "Find Bird Photos")
