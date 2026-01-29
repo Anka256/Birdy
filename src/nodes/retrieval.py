@@ -35,6 +35,6 @@ def find_bird_photos_node(state: AppState):
         print(f"📸 {len(photos)} photos found.")
     else:
         state["bird_images"] = []
-        print("❌ No name found, cannot search for photos.")
+        print("❌fetching No name found, cannot search for photos.")
         
     return state
