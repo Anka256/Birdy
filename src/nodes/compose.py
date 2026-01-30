@@ -4,7 +4,7 @@ from src.state import AppState
 MODEL_NAME = "qwen3:14b" 
 
 def compose_response_node(state: AppState):
-    print("--- Rapor Hazırlanıyor (Compose Node) ---")
+    print("--- Report Generating (Compose Node) ---")
     
     bird_name = state.get("common_name")
     sci_name = state.get("scientific_name")
@@ -41,7 +41,7 @@ def compose_response_node(state: AppState):
     Keep the tone neutral and informative. Do not mention "Based on the text provided".
     """
 
-    print(f"🤖 LLM ({MODEL_NAME}) çalışıyor...")
+    print(f"🤖 LLM ({MODEL_NAME}) running...")
     
     try:
         llm = ChatOllama(model=MODEL_NAME)

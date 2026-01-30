@@ -28,6 +28,7 @@ def identify_bird_with_text_node(state: AppState):
     query = state["user_query"] + " scientific name"
     response = tavily_client.search(query=query)
     state["scientific_name"] = extract_scientific_name(response) or "Scientific name not found"
+    state["common_name"] = state["user_query"].title()
     return state
 
 def identify_bird_with_photo_node(state: AppState):
