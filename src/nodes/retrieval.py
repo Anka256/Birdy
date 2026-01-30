@@ -1,6 +1,7 @@
 from src.state import AppState
 from src.tools.wiki_search import get_wiki_data
 from src.tools.inaturalist import get_bird_photos_from_inaturalist
+from src.tools.xenocanto import get_bird_sounds_from_xenocanto
 
 def find_bird_info_node(state: AppState):
     query = state.get("scientific_name")
@@ -36,5 +37,24 @@ def find_bird_photos_node(state: AppState):
     else:
         state["bird_images"] = []
         print("❌fetching No name found, cannot search for photos.")
+        
+    return state
+
+
+
+def find_bird_sounds_node(state: AppState):
+    query = state.get("scientific_name")
+    
+    target_name = query if query else state.get("common_name")
+    
+    print(f"--- Xeno-canto Sound Searching: {target_name} ---")
+    
+    if target_name:
+        sounds = get_bird_sounds_from_xenocanto(target_name, limit=3)
+        state["bird_audio_urls"] = sounds
+        print(f"🎵 {len(sounds)} sounds found.")
+    else:
+        state["bird_audio_urls"] = []
+        print("❌ No name found, cannot search for sounds.")
         
     return state
