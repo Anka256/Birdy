@@ -26,7 +26,7 @@ def find_bird_photos_node(state: AppState):
     
     photos = []
     if target_name:
-        photos = get_bird_photos_from_inaturalist(target_name, limit=5)
+        photos = get_bird_photos_from_inaturalist(target_name, limit=15)
         
     return {"bird_images": photos}
 
@@ -38,6 +38,6 @@ def find_bird_sounds_node(state: AppState):
     
     sounds = []
     if target_name:
-        sounds = get_bird_sounds_from_xenocanto(target_name, limit=3)
+        sounds = get_bird_sounds_from_xenocanto(target_name, limit=5)
         
     return {"bird_audio_urls": sounds}

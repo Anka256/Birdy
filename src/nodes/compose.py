@@ -1,7 +1,7 @@
 from langchain_ollama import ChatOllama
 from src.state import AppState
 
-MODEL_NAME = "qwen3:14b" 
+MODEL_NAME = "qwen3:8b" 
 
 def compose_response_node(state: AppState):
     print("--- Report Generating (Compose Node) ---")
@@ -50,20 +50,6 @@ def compose_response_node(state: AppState):
     except Exception as e:
         ai_summary = f"Error generating summary: {e}"
 
-    multimedia_section = "\n\n---\n### 📸 Photos (iNaturalist)\n"
-    if state.get("bird_images"):
-        for i, img_url in enumerate(state["bird_images"][:3]):
-            multimedia_section += f"[![Bird Image {i+1}]({img_url})]({img_url}) "
-    else:
-        multimedia_section += "_No photos found._"
-
-    multimedia_section += "\n\n### 🎵 Audio Samples (Xeno-canto)\n"
-    if state.get("bird_audio_urls"):
-        for i, audio_url in enumerate(state["bird_audio_urls"][:3]):
-            multimedia_section += f"- [Listen to Sample {i+1}]({audio_url})\n"
-    else:
-        multimedia_section += "_No audio found._"
-
-    state["final_response"] = ai_summary + multimedia_section
+    state["final_response"] = ai_summary
     
     return state
