@@ -6,10 +6,12 @@ graph = StateGraph(AppState)
 
 graph.add_node("Decide Any Media", decide_any_media_node)
 
+# IDENTIFICATION NODES
 graph.add_node("Identify Bird with Text", identify_bird_with_text_node)
 graph.add_node("Identify Bird with Photo", identify_bird_with_photo_node)
 graph.add_node("Identify Bird with Sound", identify_bird_with_sound_node)
 
+# RETRIEVAL NODES
 graph.add_node("Find Bird Info", find_bird_info_node)
 graph.add_node("Find Bird Photos", find_bird_photos_node)
 graph.add_node("Find Bird Sounds", find_bird_sounds_node)

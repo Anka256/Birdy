@@ -1,0 +1,69 @@
+from langchain_ollama import ChatOllama
+from src.state import AppState
+
+MODEL_NAME = "qwen3:14b" 
+
+def compose_response_node(state: AppState):
+    print("--- Rapor Hazırlanıyor (Compose Node) ---")
+    
+    bird_name = state.get("common_name")
+    sci_name = state.get("scientific_name")
+    wiki_data = state.get("wiki_summary")
+    
+    if not bird_name:
+        state["final_response"] = "Sorry, I could not identify the bird in the image/sound."
+        return state
+
+    context_text = wiki_data[:5000] if wiki_data else "No Wikipedia data available. Use your internal knowledge."
+
+    prompt = f"""
+    You are an expert ornithologist providing an objective, scientific summary.
+    
+    Bird: {bird_name} ({sci_name})
+    Context from Wikipedia:
+    {context_text}
+    
+    Task:
+    Provide a concise, informative summary about this bird.
+    Structure your response with these Markdown headings:
+    ### 📝 Description
+    (Physical appearance, size, distinct features)
+    
+    ### 🌍 Habitat & Distribution
+    (Where they live, migration patterns)
+    
+    ### 🦗 Diet & Behavior
+    (What they eat, interesting behaviors)
+    
+    ### 💡 Fun Fact
+    (One short interesting fact)
+
+    Keep the tone neutral and informative. Do not mention "Based on the text provided".
+    """
+
+    print(f"🤖 LLM ({MODEL_NAME}) çalışıyor...")
+    
+    try:
+        llm = ChatOllama(model=MODEL_NAME)
+        response = llm.invoke(prompt)
+        ai_summary = response.content
+    except Exception as e:
+        ai_summary = f"Error generating summary: {e}"
+
+    multimedia_section = "\n\n---\n### 📸 Photos (iNaturalist)\n"
+    if state.get("bird_images"):
+        for i, img_url in enumerate(state["bird_images"][:3]):
+            multimedia_section += f"[![Bird Image {i+1}]({img_url})]({img_url}) "
+    else:
+        multimedia_section += "_No photos found._"
+
+    multimedia_section += "\n\n### 🎵 Audio Samples (Xeno-canto)\n"
+    if state.get("bird_audio_urls"):
+        for i, audio_url in enumerate(state["bird_audio_urls"][:3]):
+            multimedia_section += f"- [Listen to Sample {i+1}]({audio_url})\n"
+    else:
+        multimedia_section += "_No audio found._"
+
+    state["final_response"] = ai_summary + multimedia_section
+    
+    return state
