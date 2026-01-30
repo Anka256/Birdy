@@ -54,6 +54,8 @@ with col_query:
         "Enter your query about a bird (or leave empty if uploading)",
         placeholder="e.g. What bird is this? or 'Stork'"
     )
+    st.write("")
+    start_analysis = st.button("Analyze 🦜")
 
 with col_upload:
     uploaded_file = st.file_uploader(
@@ -78,8 +80,6 @@ elif user_text_query:
     input_type = "text"
 else:
     input_type = None
-
-start_analysis = st.button("Analyze 🦜")
 
 if start_analysis:
     if not input_type:
