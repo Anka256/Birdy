@@ -1,7 +1,7 @@
 from langgraph.graph import StateGraph, START, END
 from src.state import AppState
 
-# --- NODE IMPORTLARI ---
+# --- NODE IMPORTS ---
 from src.nodes.identification import (
     identify_bird_with_text_node, 
     identify_bird_with_photo_node, 
