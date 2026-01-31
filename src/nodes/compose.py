@@ -1,7 +1,8 @@
 from langchain_ollama import ChatOllama
 from src.state import AppState
+from src.config import config
 
-MODEL_NAME = "qwen3:8b" 
+MODEL_NAME = config.LLM_MODEL_NAME 
 
 def compose_response_node(state: AppState):
     print("--- Report Generating (Compose Node) ---")

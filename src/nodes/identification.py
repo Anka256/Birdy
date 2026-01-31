@@ -1,13 +1,11 @@
 from tavily import TavilyClient
-from dotenv import load_dotenv
-import os
 import re
 from src.state import AppState
 from src.tools.vision_model import get_bird_prediction
 from src.tools.audio_client import analyze_audio
+from src.config import config
 
-load_dotenv()
-TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+TAVILY_API_KEY = config.TAVILY_API_KEY
 
 def extract_scientific_name(response):
     results = response.get("results", [])

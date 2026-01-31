@@ -1,4 +1,5 @@
 from src.state import AppState
+from src.config import config
 from src.tools.wiki_search import get_wiki_data
 from src.tools.inaturalist import get_bird_photos_from_inaturalist
 from src.tools.xenocanto import get_bird_sounds_from_xenocanto
@@ -26,7 +27,7 @@ def find_bird_photos_node(state: AppState):
     
     photos = []
     if target_name:
-        photos = get_bird_photos_from_inaturalist(target_name, limit=15)
+        photos = get_bird_photos_from_inaturalist(target_name, limit=config.INATURALIST_PHOTO_LIMIT)
         
     return {"bird_images": photos}
 
@@ -38,6 +39,6 @@ def find_bird_sounds_node(state: AppState):
     
     sounds = []
     if target_name:
-        sounds = get_bird_sounds_from_xenocanto(target_name, limit=5)
+        sounds = get_bird_sounds_from_xenocanto(target_name, limit=config.XENOCANTO_SOUND_LIMIT)
         
     return {"bird_audio_urls": sounds}
